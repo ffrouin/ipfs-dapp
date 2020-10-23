@@ -39,7 +39,7 @@ function myIPFSConsole(msg) {
   console.log(msg)
 }
 document.addEventListener('DOMContentLoaded', async () => {
-  typeText(document.getElementById('console'), 'Please wait, I\'m waking up... a coffee. ', 250, 0)
+  myConsole('Please wait a minute, I\'m loading...', 250, 0)
 
   const node = await IPFS.create({
     repo: String(Math.random() + Date.now()),
