@@ -17,14 +17,18 @@ body {
 .container {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
   justify-content: space-evenly;
   height: 100vh;
+  flex: 1;
 }
 .Terminal {
+  flex: 0 0 auto;
   width: 600px;
   height: 400px;
   box-shadow: 2px 4px 10px rgba(0,0,0,.5);
+  margin-bottom: 10px;
 }
 
 .Terminal__Toolbar {
@@ -86,6 +90,7 @@ body {
   margin-top: -1px;
   padding-top: 2px;
   overflow-y: scroll;
+  overflow-x: hidden;
   ::selection {
   background: #0080FF;
   text-shadow: none;
@@ -132,13 +137,16 @@ body {
 }
 .ipfs-reader {
   width: 99.1%;
-  max-width: 97.5%;
-  min-width: 97.5%;
+  max-width: 97.2%;
+  min-width: 97.2%;
   height: 20px;
   min-height: 20px;
 }
 .ipfs-read-message {
   width: 100%;
+}
+.ipns-browser {
+  width: 75%;
 }
 
 @keyframes blink {
@@ -178,6 +186,24 @@ body {
         <span class="Prompt__cursor"></span>
       </div>
       <p id="ipfs-console" class="Terminal__text"></p>
+    </div>
+  </div>
+  <div draggable="true" class="Terminal">
+    <div class="Terminal__Toolbar">
+      <div class="Toolbar__buttons">
+        <button class="Toolbar__button Toolbar__button--exit">&#10005;</button>
+        <button class="Toolbar__button">&#9472;</button>
+        <button class="Toolbar__button">&#9723;</button>
+      </div>
+      <p class="Toolbar__user">IPFS Web Browser</p>
+    </div>
+    <div id="terminal-body" class="Terminal__body Terminal__text">
+    <div>
+      <div>ipns://
+      <input class="ipns-browser" id="ipns-browser" placeholder="dapp.linuxtribe.fr"></input>
+      <button class="ipfs-browser-go" id="ipfs-browser-go">Go</button></div>
+      <div class="ipfs-browser-content" id="ipfs-browser-content"></div>
+    </div>
     </div>
   </div>
   <div draggable="true" class="Terminal">
