@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>webclient@ipfs-node</title>
+  <script src="https://unpkg.com/hlsjs-ipfs-loader@0.3.0/dist/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <style type="text/css">
 
 
@@ -29,6 +31,7 @@ body {
   height: 400px;
   box-shadow: 2px 4px 10px rgba(0,0,0,.5);
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .Terminal__Toolbar {
@@ -148,6 +151,50 @@ body {
 .ipns-browser {
   width: 75%;
 }
+.ipfs-video {
+  width: calc(100% - 70px);
+}
+#video {
+  width: 100%;
+  height: calc(100% - 50px);
+}
+#multihash-input {
+  width: 80%;
+}
+#drag-container {
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed;
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
+#drag-container.dragging {
+  background-color: #E7E8EE;
+  opacity: 1;
+
+}
+
+#drag-container p {
+  margin-left: 1em;
+}
+
+#progress-container {
+  margin-top: 1em;
+  border-radius: 0.5em;
+  background-color: #0B3A53;
+  overflow-x: hidden;
+  margin-bottom: 10px;
+}
+
+#progress-bar {
+  height: 1em;
+  border-radius: 0.5em;
+  background-color: #6ACAD1;
+  transform: translateX(-100%);
+}
 
 @keyframes blink {
   0% {
@@ -166,7 +213,7 @@ body {
 }
   </style>
 </head>
-<body>
+<body ondragover="event.preventDefault()">
   <script src="jquery-3.5.1.min.js"></script>
   <script src="js-ipfs.js"></script>
   <div class="container">
@@ -180,10 +227,14 @@ body {
       <p class="Toolbar__user">webclient@ipfs-node:~</p>
     </div>
     <div id="terminal-body" class="Terminal__body">
+      <div id="node-id" class="Terminal__text"></div>
+      <div id="agent-version" class="Terminal__text"></div>
+      <div id="protocols" class="Terminal__text"></div>
+      <div id="peers" class="Terminal__text"></div>
       <p id="console" class="Terminal__text"></p>
       <div class="Terminal__Prompt">
         <span class="Prompt__user">webclient@ipfs-node:</span><span class="Prompt__location">~</span><span class="Prompt__dollar">$</span>
-        <span class="Prompt__cursor"></span>
+        <span id="terminal-cursor" class="Prompt__cursor Terminal__text">  loading...</span>
       </div>
       <p id="ipfs-console" class="Terminal__text"></p>
     </div>
@@ -218,8 +269,57 @@ body {
     <div>
       <textarea class="ipfs-message" id="message-content" placeholder="Enter your message"></textarea>
       <button class="ipfs-store-message" id="store-message">Store a message as a file on IPFS</button>
-      <input class="ipfs-reader" id="ipfs-reader" placeholder="Qm..."></input>
+      <input class="ipfs-reader" id="ipfs-reader" placeholder="Qm..." value="QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme"></input>
       <button class="ipfs-read-message" id="read-file">Read a file on IPFS</button>
+    </div>
+  </div>
+  <div draggable="true" class="Terminal">
+    <div class="Terminal__Toolbar">
+      <div class="Toolbar__buttons">
+        <button class="Toolbar__button Toolbar__button--exit">&#10005;</button>
+        <button class="Toolbar__button">&#9472;</button>
+        <button class="Toolbar__button">&#9723;</button>
+      </div>
+      <p class="Toolbar__user">IPFS File Manager</p>
+    </div>
+    <div id="terminal-body" class="Terminal__body Terminal__text">
+    <div id="drag-container">
+       <p><b>Drag &amp; drop</b> a file to upload it.</p>
+    </div>
+    <div id="progress-container">
+      <div id="progress-bar"></div>
+    </div>
+    <input id="multihash-input" placeholder="Qm..."></input>
+    <button class="file-download" id="file-download">Download</button>
+    </div>
+  </div>
+  <div draggable="true" class="Terminal">
+    <div class="Terminal__Toolbar">
+      <div class="Toolbar__buttons">
+        <button class="Toolbar__button Toolbar__button--exit">&#10005;</button>
+        <button class="Toolbar__button">&#9472;</button>
+        <button class="Toolbar__button">&#9723;</button>
+      </div>
+      <p class="Toolbar__user">IPFS Contacts</p>
+    </div>
+    <div id="terminal-body" class="Terminal__body Terminal__text">
+    <p>Comming soon...</p>
+    </div>
+  </div>
+  <div draggable="true" class="Terminal">
+    <div class="Terminal__Toolbar">
+      <div class="Toolbar__buttons">
+        <button class="Toolbar__button Toolbar__button--exit">&#10005;</button>
+        <button class="Toolbar__button">&#9472;</button>
+        <button class="Toolbar__button">&#9723;</button>
+      </div>
+      <p class="Toolbar__user">IPFS Video Player</p>
+    </div>
+    <div>
+      <input class="ipfs-video" id="ipfs-video" placeholder="Qm..."></input>
+      <button class="ipfs-video-go" id="ipfs-video-go">Go</button></div>
+    <video id="video" controls></video>
+    <div id="modal"><span id="errorText"></span></div>
     </div>
   </div>
   </div>
