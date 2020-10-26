@@ -18,7 +18,7 @@ async function IPFSvideo(node) {
   hls.config.ipfsHash = document.getElementById('ipfs-video').value
   hls.loadSource('master.m3u8')
   hls.attachMedia(video)
-  hls.on(Hls.Events.MANIFEST_PARSED, () => video.play())
+  hls.on(Hls.Events.MANIFEST_PARSED, () => video.pause())
   }
 } 
 
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', async () => {
        for await (const chunk of file.content) {
           content.push(chunk)
        }
-       const myFile = new window.Blob([content], { type: 'application/octet-binary' })
+       const myFile = new window.Blob(content, { type: 'application/octet-binary' })
        const url = window.URL.createObjectURL(myFile)
        const link = document.createElement('a')
        link.setAttribute('href', url)
@@ -248,7 +248,10 @@ function getFile () {
           node.add({
             path: file.name,
             content: Buffer.from(buffer)
-          }, { wrap: true, progress: updateProgress }).then( (file) => document.getElementById('multihash-input').value = file.cid.toString())
+          }, { wrap: true, progress: updateProgress }).then( (file) => {
+                resetProgress()
+                document.getElementById('multihash-input').value = file.cid.toString()
+           })
         })
         .catch(onError)
     })

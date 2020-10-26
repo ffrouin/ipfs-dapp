@@ -92,7 +92,7 @@ body {
   height: calc(100% - 25px);
   margin-top: -1px;
   padding-top: 2px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   ::selection {
   background: #0080FF;
@@ -132,18 +132,15 @@ body {
   width: 99.1%;
   max-width: 99.1%;
   min-width: 99.1%;
-  height: 300px;
-  min-height: 300px;
+  height: 296px;
+  min-height: 296px;
 }
 .ipfs-store-message {
   width: 100%;
 }
 .ipfs-reader {
-  width: 99.1%;
-  max-width: 97.2%;
-  min-width: 97.2%;
-  height: 20px;
-  min-height: 20px;
+  width: 97.2%;
+  height: 14px;
 }
 .ipfs-read-message {
   width: 100%;
@@ -182,15 +179,13 @@ body {
 }
 
 #progress-container {
-  margin-top: 1em;
-  border-radius: 0.5em;
   background-color: #0B3A53;
   overflow-x: hidden;
   margin-bottom: 10px;
 }
 
 #progress-bar {
-  height: 1em;
+  height: 2em;
   border-radius: 0.5em;
   background-color: #6ACAD1;
   transform: translateX(-100%);
@@ -284,7 +279,7 @@ body {
     </div>
     <div id="terminal-body" class="Terminal__body Terminal__text">
     <div id="drag-container">
-       <p><b>Drag &amp; drop</b> a file to upload it.</p>
+       <p><b>Drag &amp; drop</b> a file to store it on IPFS.</p>
     </div>
     <div id="progress-container">
       <div id="progress-bar"></div>
@@ -316,7 +311,7 @@ body {
       <p class="Toolbar__user">IPFS Video Player</p>
     </div>
     <div>
-      <input class="ipfs-video" id="ipfs-video" placeholder="Qm..."></input>
+      <input class="ipfs-video" id="ipfs-video" placeholder="Qm..." value="QmdpAidwAsBGptFB3b6A9Pyi5coEbgjHrL3K2Qrsutmj9K"></input>
       <button class="ipfs-video-go" id="ipfs-video-go">Go</button></div>
     <video id="video" controls></video>
     <div id="modal"><span id="errorText"></span></div>
